@@ -3,10 +3,10 @@
 ## Identificação do Grupo
 
 - **Integrantes:**
-  1. Nome:
-  2. Nome:
-  3. Nome:
-  4. Nome:
+  1. Nome: Anna Elisa de Lara
+  2. Nome: Giselle Oliveira Dias
+  3. Nome: Vitor Zago Capanema
+  4. Nome: ---
 
 ---
 
@@ -40,8 +40,13 @@ F1-Score: _______
 
 ### 2.2 O dataset é balanceado ou desbalanceado? Como você descobriu?
 <!-- Dica: veja a proporção da variável target na exploração dos dados -->
-
-
+respondeu_campanha
+0    0.5606
+1    0.4394
+Name: proportion, dtype: float64
+--> Existe uma proporção ligeiramente maior de casos "não respodeu" (0). Isso pode fazer
+com que o modelo tenda a fazer essa previsão, gerando certo enviesamento e deixando
+de trazer casos importantes de previsibilidade de resposta.
 
 ### 2.3 Por que usamos F1-Score e não apenas Accuracy neste caso?
 <!-- Dica: pense no que aconteceria se o modelo previsse sempre 0 -->
@@ -55,15 +60,16 @@ F1-Score: _______
 ### 3.1 Liste as validações Pandera que você implementou:
 <!-- Descreva cada validação que você adicionou -->
 
-1. cliente_id:
-2. idade:
-3. renda_mensal:
-4. score_credito:
-5. respondeu_campanha:
+1. cliente_id: Column(int, nullable=False, unique=True),
+2. idade: Column(int, Check.in_range(18, 80)),
+3. renda_mensal: Column(float, Check.in_range(1000, 50000)),
+4. score_credito: Column(float, Check.in_range(300, 850)),
+5. respondeu_campanha: Column(int, Check.isin([0, 1])),
 
 ### 3.2 Por que validar dados ANTES de treinar o modelo?
 <!-- Pense no contexto de produção: o que aconteceria se dados inválidos entrassem no modelo? -->
-
+Garbage in, garbage out - é necessário garantir que os dados estão adequados para entrar
+no modelo, sob o risco de comprometer sua qualidade/capacidade preditiva.
 
 
 ---
@@ -78,8 +84,9 @@ F1-Score: _______
 
 ### 4.2 Por que mensagens de commit descritivas são importantes?
 <!-- Pense: se outra pessoa olhar o histórico, vai entender o que foi feito? -->
-
-
+É necessário que se tenha um hitórico claro porque possibilita saber o que
+mudou e quem mudou. Isso permite fazer correções mais rápidas, voltar para uma versão anterior
+(se houver necessidade) e comparar mudanças para entender o que funciona melhor.
 
 ---
 
